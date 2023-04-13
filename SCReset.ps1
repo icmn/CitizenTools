@@ -24,10 +24,10 @@
 #####################################
 
 # Installation location for Star Citizen
-$ScInstallDir = "EXAMPLE--C:\MainGames\StarCitizen\StarCitizen"
+$ScInstallDir = "EXAMPLE__C:\MainGames\StarCitizen\StarCitizen"
 
 # Folder that will be used to backup the "USER" folder
-$backupDir = "EXAMPLE--C:\MainGames\StarCitizen\backups"
+$backupDir = "EXAMPLE__C:\MainGames\StarCitizen\backups"
 
 # Option for LIVE or PTU. 
 $installType = "LIVE" 
@@ -68,7 +68,7 @@ $resp = Read-Host -prompt "Do you wish to remove the appdata folder as well?
 
 if ($resp -like "*y*") {
     Write-Output "Removing appdata cache."
-    remove-item "$(Get-Item  Env:\USERPROFILE)\AppData\Local\Star Citizen" -Recurse -Force
+    remove-item "$((Get-Item  Env:\USERPROFILE).value)\AppData\Local\Star Citizen" -Recurse -Force
 }
 
 # Restore Backed up bindings
