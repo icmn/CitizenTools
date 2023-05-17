@@ -24,10 +24,10 @@
 #####################################
 
 # Installation location for Star Citizen
-$ScInstallDir = "EXAMPLE__C:\MainGames\StarCitizen\StarCitizen"
+$ScInstallDir = "EXAMPLE:C:\MainGames\StarCitizen\StarCitizen"
 
 # Folder that will be used to backup the "USER" folder
-$backupDir = "EXAMPLE__C:\MainGames\StarCitizen\backups"
+$backupDir = "EXAMPLE:C:\MainGames\StarCitizen\backups"
 
 # Option for LIVE or PTU. 
 $installType = "LIVE" 
@@ -75,8 +75,12 @@ if ($resp -like "*y*") {
 Write-Output "Restoring backed up Binding/control mapping files. You'll still have to configure them in game."
 Copy-Item -Path "$destname\Client\0\Controls\Mappings" -Destination "$ScInstallDir\LIVE\USER\Client\0\Controls\Mappings" -Force -Recurse
 
+# Find newest binding file:
+$hide = (gci "$ScInstallDir\LIVE\USER\Client\0\Controls\Mappings" | Sort-Object -Property LastWriteTime -Descending)[0].Name -match '^(.*).xml' 
+
+$bestbind = $matches[1]
 
 write-host 'Reminder: You can load back in exported bindings using the console command "pp_RebindKeys <filename>"
 Note: Do not use the full path. The file names are in the folder listed above (USER\Client\0\Controls\Mappings).
-Ex: "pp_RebindKeys my_backedup_bindings.xml"'
+Ex (and best candidate): "pp_RebindKeys '"$bestbind"'"'
 
